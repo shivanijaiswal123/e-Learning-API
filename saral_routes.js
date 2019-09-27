@@ -24,6 +24,24 @@ app.post('/course',(req,res)=>{
 })
 
 
+app.get('/courses/:id', function (req, res) {
+    // First read existing users.
+    fs.readFile( __dirname + "/" + "courses.json", 'utf8', function (err, data) {
+    var coures_data  = JSON.parse( data );
+    for(var i=0;i<coures_data.length;i++){
+        if(req.params.id==coures_data[i]["id"]){
+            var course=coures_data[i]
+            break
+            
+        }
+    }
+    
+    res.end( JSON.stringify(course));
+    })
+})
+
+
+
 app.listen(3500, () => console.log('server is listening'));
 
 
