@@ -1,0 +1,52 @@
+[
+  {
+    "name": "C",
+    "description": "will learn C",
+    "id": 1
+  },
+  {
+    "name": "JS",
+    "description": "will learn JS",
+    "id": 2
+  },
+  {
+    "name": "C++",
+    "description": "will learn C++",
+    "id": 3
+  },
+  {
+    "name": "DBMS",
+    "description": "will learn DBMS",
+    "id": 4
+  },
+  {
+    "name": "DS",
+    "description": "will learn DS",
+    "id": 5
+  },
+  {
+    "name": "React JS",
+    "description": "will learn React JS",
+    "id": 6
+  },
+  {
+    "name": "python",
+    "description": "will learn python",
+    "id": 7
+  },
+  {
+    "name": "Angular",
+    "description": "will learn Angular",
+    "id": 8
+  },
+  {
+    "name": "CSS",
+    "description": "will learn CSS",
+    "id": 9
+  },
+  {
+    "name": "java",
+    "description": "will learn java",
+    "id": 10
+  }
+]
