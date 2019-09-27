@@ -52,14 +52,32 @@ app.put('/courses/:id', function (req, res) {
 
 })
 
-
-
 app.get('/courses',(req,res)=>{
     var data=fs.readFileSync('courses.json')
     var coures_data = JSON.parse(data)
     res.send( coures_data);
 })
 
+app.post('/excercise',(req,res)=>{
+    var user={
+        courseId : req.body.courseId,
+        name :req.body.name,
+        content : req.body.content,
+        hint : req.body.hint
+    }
+    
+    var data = fs.readFileSync('excercise.json')
+    data.toString();
+    var excercise_data = JSON.parse(data)
+    user.id=excercise_data.length+1
+    
+    excercise_data.push(user)
+
+    fs.writeFileSync("excercise.json", JSON.stringify(excercise_data,null,2))
+    return res.json(excercise_data)
+
+
+})
 
 
 app.listen(3500, () => console.log('server is listening'));
