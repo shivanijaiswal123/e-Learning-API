@@ -32,12 +32,24 @@ app.get('/courses/:id', function (req, res) {
         if(req.params.id==coures_data[i]["id"]){
             var course=coures_data[i]
             break
-            
         }
     }
-    
     res.end( JSON.stringify(course));
     })
+})
+
+expresapp.put('/courses/:id', function (req, res) {
+
+    var id = req.params.id;
+    var data = fs.readFileSync('courses.json')
+    var coures_data = JSON.parse(data);
+   
+    coures_data[id]["name"] = req.body.name;
+    coures_data[id][ "description"] = req.body.description;
+    
+    fs.writeFileSync("courses.json", JSON.stringify(coures_data));
+    return res.json(coures_data)
+
 })
 
 
