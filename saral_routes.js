@@ -38,7 +38,7 @@ app.get('/courses/:id', function (req, res) {
     })
 })
 
-expresapp.put('/courses/:id', function (req, res) {
+app.put('/courses/:id', function (req, res) {
 
     var id = req.params.id;
     var data = fs.readFileSync('courses.json')
@@ -50,6 +50,14 @@ expresapp.put('/courses/:id', function (req, res) {
     fs.writeFileSync("courses.json", JSON.stringify(coures_data));
     return res.json(coures_data)
 
+})
+
+
+
+app.get('/courses',(req,res)=>{
+    var data=fs.readFileSync('courses.json')
+    var coures_data = JSON.parse(data)
+    res.send( coures_data);
 })
 
 
