@@ -135,12 +135,11 @@ app.post('/courses/:cid/exercises/:eid', function (req, res) {
 
 });
 
-
-
-
-
-
-
+app.get('/excercises',(req,res)=>{
+    var data=fs.readFileSync('excercise.json')
+    var excercise_data = JSON.parse(data)
+    res.send( excercise_data);
+})
 
 app.listen(3500, () => console.log('server is listening'));
 
