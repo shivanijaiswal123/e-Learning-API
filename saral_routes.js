@@ -80,7 +80,6 @@ app.post('/excercise',(req,res)=>{
 })   
 
 app.get('/courses/:cid/exercises/:eid', function (req, res) {
-    // First read existing users.
     var data=fs.readFileSync("excercise.json")
     var excercise_data  = JSON.parse( data );
     for(var i=0;i<excercise_data.length;i++){
@@ -93,21 +92,6 @@ app.get('/courses/:cid/exercises/:eid', function (req, res) {
         }
     }
     res.end("data not found");
-    
-})
-
-app.get('/courses/:cid/exercises', function (req, res) {
-    // First read existing users.
-    var excer=[]
-    var data=fs.readFileSync("excercise.json")
-    var excercise_data  = JSON.parse( data );
-    for(var i=0;i<excercise_data.length;i++){
-        if(req.params.cid==excercise_data[i]["courseId"]){
-            excer.push(excercise_data[i])
-        }
-    }
-    // console.log(excer)
-    res.json(excer);
     
 })
 
@@ -129,30 +113,6 @@ app.put('/courses/:cid/exercises/:eid', function (req, res) {
         }
     }
 })
-
-//submissoin
-app.post('/courses/:cid/exercises/:eid', function (req, res) {
-    var Data={
-        
-        codeUrl :req.body.codeUrl,
-        userName : req.body.userName
-        
-    }
-    
-    var data = fs.readFileSync('submission.json')
-    data.toString();
-    var excercise_data = JSON.parse(data)
-    Data.corseId=req.params.cid
-    Data.excerId=req.params.eid
-    Data.submissionId=excercise_data.length+1
-    
-    excercise_data.push(Data)
-
-    fs.writeFileSync("submission.json", JSON.stringify(excercise_data,null,2))
-    return res.json(excercise_data)
-
-
-});
 
 
 
