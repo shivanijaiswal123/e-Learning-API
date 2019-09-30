@@ -114,6 +114,26 @@ app.put('/courses/:cid/exercises/:eid', function (req, res) {
     }
 })
 
+app.post('/courses/:cid/exercises/:eid', function (req, res) {
+    var Data={
+        codeUrl :req.body.codeUrl,
+        userName : req.body.userName
+    }
+    
+    var data = fs.readFileSync('submission.json')
+    data.toString();
+    var excercise_data = JSON.parse(data)
+    Data.corseId=parseInt(req.params.cid,10)
+    Data.excerId=parseInt(req.params.eid,10)
+    Data.submissionId=excercise_data.length+1
+    
+    excercise_data.push(Data)
+
+    fs.writeFileSync("submission.json", JSON.stringify(excercise_data,null,2))
+    return res.json(excercise_data)
+
+
+});
 
 
 
