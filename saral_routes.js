@@ -5,6 +5,7 @@ const fs = require('fs')
 var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
+//-----------------------------------------------courses---------------------------------------------------------------
 app.post('/course',(req,res)=>{
     var user={
         name : req.body.name,
@@ -58,6 +59,9 @@ app.get('/courses',(req,res)=>{
     res.send( coures_data);
 })
 
+
+
+//----------------------------------------------------------Excercises---------------------------------------------------------------------
 app.post('/excercise',(req,res)=>{
     var user={
         courseId : req.body.courseId,
@@ -114,6 +118,7 @@ app.put('/courses/:cid/exercises/:eid', function (req, res) {
     }
 })
 
+//----------------------------------------------submission--------------------------------------------------------------------------
 app.post('/courses/:cid/exercises/:eid', function (req, res) {
     var Data={
         codeUrl :req.body.codeUrl,
@@ -134,6 +139,22 @@ app.post('/courses/:cid/exercises/:eid', function (req, res) {
 
 
 });
+
+app.get('/course/:cid/exercise/:eid', function (req, res) {
+    var data=fs.readFileSync("submission.json")
+    var excercise_data  = JSON.parse( data );
+    for(var i=0;i<excercise_data.length;i++){
+        if(req.params.cid==excercise_data[i]["corseId"]){
+            for(var x=0;x<excercise_data.length;x++){
+                if(req.params.eid == excercise_data[x]["excerId"] && req.params.cid==excercise_data[x]["corseId"] ){
+                    res.end( JSON.stringify(excercise_data[x]))
+                }
+            }
+        }
+    }
+    res.end("data not found");
+    
+})
 
 app.get('/excercises',(req,res)=>{
     var data=fs.readFileSync('excercise.json')
