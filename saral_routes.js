@@ -77,7 +77,89 @@ app.post('/excercise',(req,res)=>{
     return res.json(excercise_data)
 
 
+})   
+
+app.get('/courses/:cid/exercises/:eid', function (req, res) {
+    // First read existing users.
+    var data=fs.readFileSync("excercise.json")
+    var excercise_data  = JSON.parse( data );
+    for(var i=0;i<excercise_data.length;i++){
+        if(req.params.cid==excercise_data[i]["courseId"]){
+            for(var x=0;x<excercise_data.length;x++){
+                if(req.params.eid == excercise_data[x]["id"] && req.params.cid==excercise_data[x]["courseId"] ){
+                    res.end( JSON.stringify(excercise_data[x]))
+                }
+            }
+        }
+    }
+    res.end("data not found");
+    
 })
+
+app.get('/courses/:cid/exercises', function (req, res) {
+    // First read existing users.
+    var excer=[]
+    var data=fs.readFileSync("excercise.json")
+    var excercise_data  = JSON.parse( data );
+    for(var i=0;i<excercise_data.length;i++){
+        if(req.params.cid==excercise_data[i]["courseId"]){
+            excer.push(excercise_data[i])
+        }
+    }
+    // console.log(excer)
+    res.json(excer);
+    
+})
+
+app.put('/courses/:cid/exercises/:eid', function (req, res) {
+    var data=fs.readFileSync("excercise.json")
+    var excercise_data  = JSON.parse( data );
+    for(var i=0;i<excercise_data.length;i++){
+        if(req.params.cid==excercise_data[i]["courseId"]){
+            for(var x=0;x<excercise_data.length;x++){
+                if(req.params.eid == excercise_data[x]["id"] && req.params.cid==excercise_data[x]["courseId"] ){
+                    excercise_data[req.params.eid]["courseId"] = req.body.courseId;
+                    excercise_data[req.params.eid]["name"] = req.body.name;
+                    excercise_data[req.params.eid]["content"] = req.body.content;
+                    excercise_data[req.params.eid]["hint"] = req.body.hint;
+                    fs.writeFileSync("excercise.json", JSON.stringify(excercise_data,null,2));
+                    res.send(excercise_data)
+                }
+            }
+        }
+    }
+})
+
+//submissoin
+app.post('/courses/:cid/exercises/:eid', function (req, res) {
+    var Data={
+        
+        codeUrl :req.body.codeUrl,
+        userName : req.body.userName
+        
+    }
+    
+    var data = fs.readFileSync('submission.json')
+    data.toString();
+    var excercise_data = JSON.parse(data)
+    Data.corseId=req.params.cid
+    Data.excerId=req.params.eid
+    Data.submissionId=excercise_data.length+1
+    
+    excercise_data.push(Data)
+
+    fs.writeFileSync("submission.json", JSON.stringify(excercise_data,null,2))
+    return res.json(excercise_data)
+
+
+});
+
+
+
+
+
+
+
 
 
 app.listen(3500, () => console.log('server is listening'));
